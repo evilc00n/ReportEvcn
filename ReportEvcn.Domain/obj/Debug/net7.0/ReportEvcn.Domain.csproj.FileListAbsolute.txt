@@ -1,0 +1,12 @@
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\bin\Debug\net7.0\ReportEvcn.Domain.deps.json
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\bin\Debug\net7.0\ReportEvcn.Domain.dll
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\bin\Debug\net7.0\ReportEvcn.Domain.pdb
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\obj\Debug\net7.0\ReportEvcn.Domain.csproj.AssemblyReference.cache
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\obj\Debug\net7.0\ReportEvcn.Domain.GeneratedMSBuildEditorConfig.editorconfig
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\obj\Debug\net7.0\ReportEvcn.Domain.AssemblyInfoInputs.cache
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\obj\Debug\net7.0\ReportEvcn.Domain.AssemblyInfo.cs
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\obj\Debug\net7.0\ReportEvcn.Domain.csproj.CoreCompileInputs.cache
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\obj\Debug\net7.0\ReportEvcn.Domain.dll
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\obj\Debug\net7.0\refint\ReportEvcn.Domain.dll
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\obj\Debug\net7.0\ReportEvcn.Domain.pdb
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\obj\Debug\net7.0\ref\ReportEvcn.Domain.dll
