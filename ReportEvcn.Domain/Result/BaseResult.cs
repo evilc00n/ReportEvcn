@@ -8,8 +8,8 @@ namespace ReportEvcn.Domain.Result
 {
     public class BaseResult
     {
-        public string ErrorMesage { get; set; }
-        public bool IsSuccess => ErrorMesage == null;
+        public string ErrorMessage { get; set; }
+        public bool IsSuccess => ErrorMessage == null;
         
         public int ErrorCode { get; set; }
 
@@ -22,7 +22,7 @@ namespace ReportEvcn.Domain.Result
 
         public BaseResult(string errorMessage, int errorCode, T data)
         {
-            ErrorMesage = errorMessage;
+            ErrorMessage = errorMessage;
             ErrorCode = errorCode;
             Data = data;    
         }

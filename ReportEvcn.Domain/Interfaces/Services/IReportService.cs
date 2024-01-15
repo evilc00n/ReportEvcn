@@ -1,4 +1,4 @@
-﻿using ReportEvcn.Domain.Dto;
+﻿using ReportEvcn.Domain.Dto.Report;
 using ReportEvcn.Domain.Result;
 using System;
 using System.Collections.Generic;
@@ -21,5 +21,33 @@ namespace ReportEvcn.Domain.Interfaces.Services
         /// <param name="userId"></param>
         /// <returns></returns>
         Task<CollectionResult<ReportDTO>> GetReportsAsync(long userId);
+
+        /// <summary>
+        /// Получение отчёта по индентификатору.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<BaseResult<ReportDTO>> GetReportByIdAsync(long id);
+
+        /// <summary>
+        /// Создание отчёта с базовыми параметрами.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        Task<BaseResult<ReportDTO>> CreateReportAsync(CreateReportDTO dto);
+
+        /// <summary>
+        /// Удаление отчёта по id.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        Task<BaseResult<ReportDTO>> DeleteReportAsync(long id);
+
+        /// <summary>
+        /// Обновление отчёта.
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        Task<BaseResult<ReportDTO>> UpdateReportAsync(UpdateReportDTO dto);
     }
 }

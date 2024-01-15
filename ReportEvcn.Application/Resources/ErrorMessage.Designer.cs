@@ -70,11 +70,38 @@ namespace ReportEvcn.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Report Already Exist.
+        /// </summary>
+        internal static string ReportAlreadyExist {
+            get {
+                return ResourceManager.GetString("ReportAlreadyExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Report Not Found.
+        /// </summary>
+        internal static string ReportNotFound {
+            get {
+                return ResourceManager.GetString("ReportNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Reports Not Found.
         /// </summary>
         internal static string ReportsNotFound {
             get {
                 return ResourceManager.GetString("ReportsNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Not Found.
+        /// </summary>
+        internal static string UserNotFound {
+            get {
+                return ResourceManager.GetString("UserNotFound", resourceCulture);
             }
         }
     }

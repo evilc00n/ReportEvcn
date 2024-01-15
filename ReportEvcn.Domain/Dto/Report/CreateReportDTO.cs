@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ReportEvcn.Domain.Dto
+namespace ReportEvcn.Domain.Dto.Report
 {
-    public record ReportDTO (long Id, string Name, string Description, string DateCreated);
+    public record CreateReportDTO(string Name, string Description, long UserId);
 }

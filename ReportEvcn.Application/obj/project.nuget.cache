@@ -1,9 +1,14 @@
 {
   "version": 2,
-  "dgSpecHash": "xd451voO1IO7NJfYPomJqsCq/MI3ozCvnq+ugUi4v4KI606warK84sNG6d/HIBGPxTnSpfckEuE1stVVe/bTOw==",
+  "dgSpecHash": "0OYZDk6GVmoiBS+PokUISVE0NEAHEbs1cLWgYpk48LJggWYE/wEhPg2ZKJgW7XatDqAuEI3tLONwFoc578rgvg==",
   "success": true,
   "projectFilePath": "C:\\dotnet\\lessons\\demo\\ReportEvcn\\ReportEvcn.Application\\ReportEvcn.Application.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Roman\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
+    "C:\\Users\\Roman\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",
+    "C:\\Users\\Roman\\.nuget\\packages\\fluentvalidation\\11.9.0\\fluentvalidation.11.9.0.nupkg.sha512",
+    "C:\\Users\\Roman\\.nuget\\packages\\fluentvalidation.dependencyinjectionextensions\\11.9.0\\fluentvalidation.dependencyinjectionextensions.11.9.0.nupkg.sha512",
+    "C:\\Users\\Roman\\.nuget\\packages\\microsoft.csharp\\4.7.0\\microsoft.csharp.4.7.0.nupkg.sha512",
     "C:\\Users\\Roman\\.nuget\\packages\\microsoft.entityframeworkcore\\7.0.0\\microsoft.entityframeworkcore.7.0.0.nupkg.sha512",
     "C:\\Users\\Roman\\.nuget\\packages\\microsoft.entityframeworkcore.abstractions\\7.0.0\\microsoft.entityframeworkcore.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Roman\\.nuget\\packages\\microsoft.entityframeworkcore.analyzers\\7.0.0\\microsoft.entityframeworkcore.analyzers.7.0.0.nupkg.sha512",
