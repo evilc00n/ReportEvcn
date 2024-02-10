@@ -20,3 +20,4 @@ C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Application\obj\Debug\net7.0\Report
 C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Application\obj\Debug\net7.0\refint\ReportEvcn.Application.dll
 C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Application\obj\Debug\net7.0\ReportEvcn.Application.pdb
 C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Application\obj\Debug\net7.0\ref\ReportEvcn.Application.dll
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Application\obj\Debug\net7.0\ReportEvcn.Application.Resources.ErrorMessage.resources

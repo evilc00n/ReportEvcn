@@ -1,4 +1,6 @@
+using ReportEvcn.Application.DependencyInjection;
 using ReportEvcn.DAL.DependencyInjection;
+using Serilog;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -7,8 +9,11 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-builder.Services.AddDataAccessLayer(builder.Configuration);
+builder.Host.UseSerilog(
+    (context, configuration) => configuration.ReadFrom.Configuration(context.Configuration));
 
+builder.Services.AddDataAccessLayer(builder.Configuration);
+builder.Services.AddApplications();
 
 
 var app = builder.Build();

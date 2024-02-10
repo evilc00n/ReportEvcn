@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "A4UsRP0OIiGAQnCdnLS4vY3uNtPft7A+9bFnIiBnEy4=",
+  "Source": "ReportEvcn.Api",
+  "BasePath": "_content/ReportEvcn.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}

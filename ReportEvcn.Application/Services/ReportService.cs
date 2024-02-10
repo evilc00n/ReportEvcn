@@ -148,8 +148,6 @@ namespace ReportEvcn.Application.Services
                     ErrorCode = (int)ErrorCodes.InternarServerError
                 };
             }
-
-            throw new NotImplementedException();
         }
 
         public async Task<BaseResult<ReportDTO>> DeleteReportAsync(long id)
@@ -188,7 +186,7 @@ namespace ReportEvcn.Application.Services
             try
             {
                 var report = await _reportRepository.GetAll().FirstOrDefaultAsync(x => x.Id == dto.Id);
-                var result = _reportValidator.CreateValidator(report, user);
+                var result = _reportValidator.ValidateOnNull(report);
                 if (!result.IsSuccess)
                 {
                     return new BaseResult<ReportDTO>()

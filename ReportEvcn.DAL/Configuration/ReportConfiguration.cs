@@ -15,7 +15,7 @@ namespace ReportEvcn.DAL.Configuration
         {
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.Name).IsRequired().HasMaxLength(100);
-            builder.Property(x => x.Description).IsRequired().HasMaxLength(2000);
+            builder.Property(x => x.Description).IsRequired().HasMaxLength(1000);
 
         }
 
