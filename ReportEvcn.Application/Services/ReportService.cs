@@ -72,41 +72,42 @@ namespace ReportEvcn.Application.Services
         }
 
         /// <inheritdoc />
-        public async Task<BaseResult<ReportDTO>> GetReportByIdAsync(long id)
+        public  Task<BaseResult<ReportDTO>> GetReportByIdAsync(long id)
         {
             ReportDTO? report;
             
 
             try
             {
-                report = await _reportRepository.GetAll()
+                report = _reportRepository.GetAll()
+                    .AsEnumerable()
                     .Select(x => new ReportDTO(x.Id, x.Name, x.Description, x.CreatedAt.ToLongDateString()))
-                    .FirstOrDefaultAsync(x => x.Id == id);  
+                    .FirstOrDefault(x => x.Id == id);  
             }
             catch(Exception ex)
             {
                 _logger.Error(ex, ex.Message);
-                return new BaseResult<ReportDTO>
+                return Task.FromResult(new BaseResult<ReportDTO>
                 {
                     ErrorMessage = ErrorMessage.InternalServerError,
                     ErrorCode = (int)ErrorCodes.InternarServerError
-                };
+                });
             }
 
             if (report == null)
             {
-                _logger.Warning("Report with {id} was not found", id);
-                return new BaseResult<ReportDTO>
+                _logger.Warning($"Report with {id} was not found", id);
+                return Task.FromResult(new BaseResult<ReportDTO>
                 {
                     ErrorMessage = ErrorMessage.ReportNotFound,
                     ErrorCode = (int)ErrorCodes.ReportNotFound
-                };
+                });
             }
 
-            return new BaseResult<ReportDTO>
+            return Task.FromResult(new BaseResult<ReportDTO>
             {
                 Data = report
-            };
+            });
         }
 
         /// <inheritdoc />
@@ -130,6 +131,7 @@ namespace ReportEvcn.Application.Services
                     Name = dto.Name,
                     Description = dto.Description,
                     UserId = user.Id
+                    
                 };
                 await _reportRepository.CreateAsync(report);
 

@@ -11,7 +11,7 @@
 using System;
 using System.Reflection;
 
-[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("e3a6e779-dd81-4827-aa6a-53cda19419b5")]
+[assembly: Microsoft.Extensions.Configuration.UserSecrets.UserSecretsIdAttribute("3849ca99-e2e9-4fe5-96a6-1e6ac70a0819")]
 [assembly: System.Reflection.AssemblyCompanyAttribute("ReportEvcn.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
