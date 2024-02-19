@@ -93,3 +93,9 @@ C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\Serilog.Settin
 C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\Serilog.Sinks.Console.dll
 C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\Serilog.Sinks.Debug.dll
 C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\Serilog.Sinks.File.dll
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\Asp.Versioning.Abstractions.dll
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\Asp.Versioning.Http.dll
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\Asp.Versioning.Mvc.dll
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\Asp.Versioning.Mvc.ApiExplorer.dll
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\ReportEvcn.Api.xml
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\obj\Debug\net7.0\ReportEvcn.Api.xml

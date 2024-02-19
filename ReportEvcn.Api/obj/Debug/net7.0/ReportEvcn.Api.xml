@@ -1,0 +1,97 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>ReportEvcn.Api</name>
+    </assembly>
+    <members>
+        <member name="M:ReportEvcn.Api.Controllers.ReportController.GetUserReports(System.Int64)">
+            <summary>
+            Получение отчётов пользователя
+            </summary>
+            <param name="userId"></param>
+            <remarks>
+            Sample request:
+             
+                GET
+                {
+                    "userId": "1"
+                }
+            </remarks>
+            <response code="200">Если отчёт создался</response>
+            <response code="400">Если отчёт не был создан</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.ReportController.GetReport(System.Int64)">
+            <summary>
+            Получение отчётов с указанием идентификатора
+            </summary>
+            <param name="id"></param>
+            <remarks>
+            Sample request:
+             
+                GET
+                {
+                    "id": "1"
+                }
+            </remarks>
+            <response code="200">Если отчёт создался</response>
+            <response code="400">Если отчёт не был создан</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.ReportController.DeleteReport(System.Int64)">
+            <summary>
+            Удаление отчёта с указанием идентификатора
+            </summary>
+            <param name="id"></param>
+            <remarks>
+            Sample request:
+             
+                DELETE
+                {
+                    "id": "1"
+                }
+            </remarks>
+            <response code="200">Если отчёт создался</response>
+            <response code="400">Если отчёт не был создан</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.ReportController.CreateReport(ReportEvcn.Domain.Dto.Report.CreateReportDTO)">
+            <summary>
+            Создание отчёта
+            </summary>
+            <param name="dto"></param>
+            <remarks>
+            Sample request:
+             
+                POST
+                {
+                    "name": "Report1",
+                    "description": "Test report",
+                    "userId": "1"
+                }
+            </remarks>
+            <response code="200">Если отчёт создался</response>
+            <response code="400">Если отчёт не был создан</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.ReportController.UpdateReport(ReportEvcn.Domain.Dto.Report.UpdateReportDTO)">
+            <summary>
+            Обновление отчёта с указанием основных свойств
+            </summary>
+            <param name="dto"></param>
+            <remarks>
+            Sample request:
+             
+                PUT
+                {
+                    "id": "1"  
+                    "name": "Report1",
+                    "description": "Test report",
+                }
+            </remarks>
+            <response code="200">Если отчёт создался</response>
+            <response code="400">Если отчёт не был создан</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Startup.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
+            <summary>
+            Подключение Swagger
+            </summary>
+        </member>
+    </members>
+</doc>
