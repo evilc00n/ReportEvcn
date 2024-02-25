@@ -99,3 +99,4 @@ C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\Asp.Versioning
 C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\Asp.Versioning.Mvc.ApiExplorer.dll
 C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\ReportEvcn.Api.xml
 C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\obj\Debug\net7.0\ReportEvcn.Api.xml
+C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Api\bin\Debug\net7.0\Microsoft.AspNetCore.Authentication.JwtBearer.dll

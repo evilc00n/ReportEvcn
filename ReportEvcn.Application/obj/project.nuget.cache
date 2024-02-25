@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "0OYZDk6GVmoiBS+PokUISVE0NEAHEbs1cLWgYpk48LJggWYE/wEhPg2ZKJgW7XatDqAuEI3tLONwFoc578rgvg==",
+  "dgSpecHash": "hNa7/MmssxFCdqLyfrzjJPHLRtWlfkSN3CBwS/LVsCNj4zO21qRyhxBYgcuIOZcKFCQbP2R7qkgkCXsu26XcUA==",
   "success": true,
   "projectFilePath": "C:\\dotnet\\lessons\\demo\\ReportEvcn\\ReportEvcn.Application\\ReportEvcn.Application.csproj",
   "expectedPackageFiles": [
@@ -20,7 +20,13 @@
     "C:\\Users\\Roman\\.nuget\\packages\\microsoft.extensions.logging.abstractions\\7.0.0\\microsoft.extensions.logging.abstractions.7.0.0.nupkg.sha512",
     "C:\\Users\\Roman\\.nuget\\packages\\microsoft.extensions.options\\7.0.0\\microsoft.extensions.options.7.0.0.nupkg.sha512",
     "C:\\Users\\Roman\\.nuget\\packages\\microsoft.extensions.primitives\\7.0.0\\microsoft.extensions.primitives.7.0.0.nupkg.sha512",
-    "C:\\Users\\Roman\\.nuget\\packages\\serilog\\3.1.1\\serilog.3.1.1.nupkg.sha512"
+    "C:\\Users\\Roman\\.nuget\\packages\\microsoft.identitymodel.abstractions\\6.21.0\\microsoft.identitymodel.abstractions.6.21.0.nupkg.sha512",
+    "C:\\Users\\Roman\\.nuget\\packages\\microsoft.identitymodel.jsonwebtokens\\6.21.0\\microsoft.identitymodel.jsonwebtokens.6.21.0.nupkg.sha512",
+    "C:\\Users\\Roman\\.nuget\\packages\\microsoft.identitymodel.logging\\6.21.0\\microsoft.identitymodel.logging.6.21.0.nupkg.sha512",
+    "C:\\Users\\Roman\\.nuget\\packages\\microsoft.identitymodel.tokens\\6.21.0\\microsoft.identitymodel.tokens.6.21.0.nupkg.sha512",
+    "C:\\Users\\Roman\\.nuget\\packages\\serilog\\3.1.1\\serilog.3.1.1.nupkg.sha512",
+    "C:\\Users\\Roman\\.nuget\\packages\\system.identitymodel.tokens.jwt\\6.21.0\\system.identitymodel.tokens.jwt.6.21.0.nupkg.sha512",
+    "C:\\Users\\Roman\\.nuget\\packages\\system.security.cryptography.cng\\4.5.0\\system.security.cryptography.cng.4.5.0.nupkg.sha512"
   ],
   "logs": []
 }

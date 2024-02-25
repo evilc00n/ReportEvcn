@@ -17,7 +17,17 @@ namespace ReportEvcn.DAL.Configuration
                 .HasForeignKey(x => x.UserId)
                 .HasPrincipalKey(x => x.Id);
 
-            
+            builder.HasData(new List<User>
+            {
+                new User()
+                {
+                    Id = 1,
+                    Login = "Evcn",
+                    Password = "ADSA@#DF444",
+                    CreatedAt = DateTime.UtcNow,
+                    CreatedBy = 1
+                }
+            });
         }
     }
 }

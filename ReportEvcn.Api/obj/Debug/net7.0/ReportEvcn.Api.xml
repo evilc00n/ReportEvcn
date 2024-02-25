@@ -4,6 +4,21 @@
         <name>ReportEvcn.Api</name>
     </assembly>
     <members>
+        <member name="M:ReportEvcn.Api.Controllers.AuthController.Register(ReportEvcn.Domain.Dto.User.RegisterUserDTO)">
+            <summary>
+            Регистрация пользователя
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.AuthController.Login(ReportEvcn.Domain.Dto.User.LoginUserDTO)">
+            <summary>
+            Логин пользователя
+            </summary>
+            <param name="dto"></param>
+            <returns></returns>
+            <exception cref="T:System.NotImplementedException"></exception>
+        </member>
         <member name="M:ReportEvcn.Api.Controllers.ReportController.GetUserReports(System.Int64)">
             <summary>
             Получение отчётов пользователя
@@ -81,12 +96,17 @@
                 PUT
                 {
                     "id": "1"  
-                    "name": "Report1",
-                    "description": "Test report",
+                    "name": "Report2",
+                    "description": "Test report2",
                 }
             </remarks>
             <response code="200">Если отчёт создался</response>
             <response code="400">Если отчёт не был создан</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Startup.AddAuthenticationAndAuthorization(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
+            <summary>
+            Подключение аутентификации и авторизации
+            </summary>
         </member>
         <member name="M:ReportEvcn.Api.Startup.AddSwagger(Microsoft.Extensions.DependencyInjection.IServiceCollection)">
             <summary>

@@ -1,9 +1,5 @@
 ﻿using ReportEvcn.Domain.Interfaces;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ReportEvcn.Domain.Entity
 {
@@ -16,6 +12,8 @@ namespace ReportEvcn.Domain.Entity
         public string Password { get; set; }
 
         public List<Report> Reports { get; set; }
+
+        public UserToken UserToken { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public long CreatedBy { get; set; }

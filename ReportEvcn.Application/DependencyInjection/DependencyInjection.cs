@@ -23,7 +23,10 @@ namespace ReportEvcn.Application.DependencyInjection
             services.AddScoped<IReportValidator, ReportValidator>();
             services.AddScoped<IValidator<CreateReportDTO>, CreateReportValidator>();
             services.AddScoped<IValidator<UpdateReportDTO>, UpdateReportValidator>();
+
             services.AddScoped<IReportService, ReportService>();
+            services.AddScoped<IAuthService, AuthService>();
+            services.AddScoped<ITokenService, TokenService>();
         }
     }
 }

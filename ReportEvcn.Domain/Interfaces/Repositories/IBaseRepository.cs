@@ -1,6 +1,4 @@
-﻿
-
-namespace ReportEvcn.Domain.Interfaces.Repositories
+﻿namespace ReportEvcn.Domain.Interfaces.Repositories
 {
     public interface IBaseRepository<TEntity>
     {

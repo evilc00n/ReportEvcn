@@ -1,11 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReportEvcn.DAL.Interceptors;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace ReportEvcn.DAL
 {
@@ -17,9 +12,12 @@ namespace ReportEvcn.DAL
                 
         }
 
+
+
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.AddInterceptors(new DateInterceptor());
+            optionsBuilder.LogTo(Console.WriteLine);
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

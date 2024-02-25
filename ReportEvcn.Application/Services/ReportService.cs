@@ -43,6 +43,8 @@ namespace ReportEvcn.Application.Services
                     .Where(x => x.UserId == userId)
                     .Select(x => new ReportDTO(x.Id, x.Name, x.Description, x.CreatedAt.ToLongDateString()))
                     .ToArrayAsync();
+
+                
             }
             catch (Exception ex)
             {
@@ -72,42 +74,42 @@ namespace ReportEvcn.Application.Services
         }
 
         /// <inheritdoc />
-        public  Task<BaseResult<ReportDTO>> GetReportByIdAsync(long id)
+        public async Task<BaseResult<ReportDTO>> GetReportByIdAsync(long id)
         {
             ReportDTO? report;
-            
+
 
             try
             {
-                report = _reportRepository.GetAll()
-                    .AsEnumerable()
+                report = await _reportRepository.GetAll()
+                    .Where(x => x.Id == id)
                     .Select(x => new ReportDTO(x.Id, x.Name, x.Description, x.CreatedAt.ToLongDateString()))
-                    .FirstOrDefault(x => x.Id == id);  
+                    .FirstOrDefaultAsync();
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 _logger.Error(ex, ex.Message);
-                return Task.FromResult(new BaseResult<ReportDTO>
+                return new BaseResult<ReportDTO>
                 {
                     ErrorMessage = ErrorMessage.InternalServerError,
                     ErrorCode = (int)ErrorCodes.InternarServerError
-                });
+                };
             }
 
             if (report == null)
             {
                 _logger.Warning($"Report with {id} was not found", id);
-                return Task.FromResult(new BaseResult<ReportDTO>
+                return new BaseResult<ReportDTO>
                 {
                     ErrorMessage = ErrorMessage.ReportNotFound,
                     ErrorCode = (int)ErrorCodes.ReportNotFound
-                });
+                };
             }
 
-            return Task.FromResult(new BaseResult<ReportDTO>
+            return new BaseResult<ReportDTO>
             {
                 Data = report
-            });
+            };
         }
 
         /// <inheritdoc />

@@ -1,4 +1,5 @@
-﻿using ReportEvcn.Domain.Interfaces.Repositories;
+﻿using Microsoft.EntityFrameworkCore;
+using ReportEvcn.Domain.Interfaces.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,7 +19,10 @@ namespace ReportEvcn.DAL.Repositories
 
         public IQueryable<TEntity> GetAll()
         {
+
+
             return _dbContext.Set<TEntity>();
+
         }
 
         public async Task<TEntity> CreateAsync(TEntity entity)

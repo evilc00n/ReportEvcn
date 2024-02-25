@@ -8,6 +8,7 @@ using ReportEvcn.Domain.Result;
 namespace ReportEvcn.Api.Controllers
 {
 
+
     [Authorize]
     [ApiController]
     [ApiVersion("1.0")]

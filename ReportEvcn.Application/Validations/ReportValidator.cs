@@ -15,8 +15,8 @@ namespace ReportEvcn.Application.Validations
             {
                 return new BaseResult()
                 {
-                    ErrorMessage = ErrorMessage.ReportAlreadyExist,
-                    ErrorCode = (int) ErrorCodes.ReportAlreadyExist
+                    ErrorMessage = ErrorMessage.ReportAlreadyExists,
+                    ErrorCode = (int) ErrorCodes.ReportAlreadyExists
                 };
             }
             if (user == null)
