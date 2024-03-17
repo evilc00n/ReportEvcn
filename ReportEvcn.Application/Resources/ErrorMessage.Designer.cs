@@ -133,11 +133,38 @@ namespace ReportEvcn.Application.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Role Already Exists.
+        /// </summary>
+        internal static string RoleAlreadyExists {
+            get {
+                return ResourceManager.GetString("RoleAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Role Not Found.
+        /// </summary>
+        internal static string RoleNotFound {
+            get {
+                return ResourceManager.GetString("RoleNotFound", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to User Already Exist.
         /// </summary>
         internal static string UserAlreadyExists {
             get {
                 return ResourceManager.GetString("UserAlreadyExists", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User Already Have This Role.
+        /// </summary>
+        internal static string UserAlreadyHaveThisRole {
+            get {
+                return ResourceManager.GetString("UserAlreadyHaveThisRole", resourceCulture);
             }
         }
         

@@ -32,8 +32,8 @@
                     "userId": "1"
                 }
             </remarks>
-            <response code="200">Если отчёт создался</response>
-            <response code="400">Если отчёт не был создан</response>
+            <response code="200">Если отчёты были получены</response>
+            <response code="400">Если отчёты не были получены</response>
         </member>
         <member name="M:ReportEvcn.Api.Controllers.ReportController.GetReport(System.Int64)">
             <summary>
@@ -48,8 +48,8 @@
                     "id": "1"
                 }
             </remarks>
-            <response code="200">Если отчёт создался</response>
-            <response code="400">Если отчёт не был создан</response>
+            <response code="200">Если отчёт был получен</response>
+            <response code="400">Если отчёт не был получен</response>
         </member>
         <member name="M:ReportEvcn.Api.Controllers.ReportController.DeleteReport(System.Int64)">
             <summary>
@@ -64,8 +64,8 @@
                     "id": "1"
                 }
             </remarks>
-            <response code="200">Если отчёт создался</response>
-            <response code="400">Если отчёт не был создан</response>
+            <response code="200">Если отчёт удалился</response>
+            <response code="400">Если отчёт не был удалён</response>
         </member>
         <member name="M:ReportEvcn.Api.Controllers.ReportController.CreateReport(ReportEvcn.Domain.Dto.Report.CreateReportDTO)">
             <summary>
@@ -100,8 +100,74 @@
                     "description": "Test report2",
                 }
             </remarks>
+            <response code="200">Если отчёт обновился</response>
+            <response code="400">Если отчёт не обновился</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.RoleController.Create(ReportEvcn.Domain.Dto.Role.CreateRoleDTO)">
+            <summary>
+            Создание роли
+            </summary>
+            <param name="dto"></param>
+            <remarks>
+            Sample request:
+             
+                POST
+                {
+                    "name": "Admin"
+                }
+            </remarks>
             <response code="200">Если отчёт создался</response>
             <response code="400">Если отчёт не был создан</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.RoleController.Delete(System.Int64)">
+            <summary>
+            Удаление роли с указанием идентификатора
+            </summary>
+            <param name="id"></param>
+            <remarks>
+            Sample request:
+             
+                DELETE
+                {
+                    "id": "1"
+                }
+            </remarks>
+            <response code="200">Если роль удалилась</response>
+            <response code="400">Если роль не была удалена</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.RoleController.Update(ReportEvcn.Domain.Dto.Role.UpdateRoleDTO)">
+            <summary>
+            Обновление роли с указанием основных свойств
+            </summary>
+            <param name="dto"></param>
+            <remarks>
+            Sample request:
+             
+                PUT
+                {
+                    "id": "1"  
+                    "name": "Admin"
+                }
+            </remarks>
+            <response code="200">Если роль обновилась</response>
+            <response code="400">Если роль не обновилась</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.RoleController.AddRoleForUser(ReportEvcn.Domain.Dto.Role.UserRoleDTO)">
+            <summary>
+            Добавление роли пользователю
+            </summary>
+            <param name="dto"></param>
+            <remarks>
+            Sample request:
+             
+                POST
+                {
+                    "Login": "User1"
+                    "RoleName": "Admin"
+                }
+            </remarks>
+            <response code="200">Если роль была добавлена пользователю</response>
+            <response code="400">Если роль не была добавлена пользователю</response>
         </member>
         <member name="M:ReportEvcn.Api.Startup.AddAuthenticationAndAuthorization(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
             <summary>

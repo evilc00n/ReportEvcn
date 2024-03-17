@@ -14,11 +14,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\dotnet\\lessons\\demo\\ReportEvcn\\ReportEvcn.Domain\\ReportEvcn.Domain.csproj",
+      "projectUniqueName": "C:\\dotnet\\aspnet\\petproj\\ReportEvcn\\ReportEvcn.Domain\\ReportEvcn.Domain.csproj",
       "projectName": "ReportEvcn.Domain",
-      "projectPath": "C:\\dotnet\\lessons\\demo\\ReportEvcn\\ReportEvcn.Domain\\ReportEvcn.Domain.csproj",
+      "projectPath": "C:\\dotnet\\aspnet\\petproj\\ReportEvcn\\ReportEvcn.Domain\\ReportEvcn.Domain.csproj",
       "packagesPath": "C:\\Users\\Roman\\.nuget\\packages\\",
-      "outputPath": "C:\\dotnet\\lessons\\demo\\ReportEvcn\\ReportEvcn.Domain\\obj\\",
+      "outputPath": "C:\\dotnet\\aspnet\\petproj\\ReportEvcn\\ReportEvcn.Domain\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"

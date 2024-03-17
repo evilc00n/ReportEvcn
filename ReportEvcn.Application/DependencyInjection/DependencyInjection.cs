@@ -15,7 +15,7 @@ namespace ReportEvcn.Application.DependencyInjection
         public static void AddApplications(this IServiceCollection services)
         {
             services.AddAutoMapper(typeof(ReportMapping));
-            InitServices(services);
+            services.InitServices();
         }
 
         private static void InitServices(this IServiceCollection services)
@@ -27,6 +27,7 @@ namespace ReportEvcn.Application.DependencyInjection
             services.AddScoped<IReportService, ReportService>();
             services.AddScoped<IAuthService, AuthService>();
             services.AddScoped<ITokenService, TokenService>();
+            services.AddScoped<IRoleService, RoleService>();
         }
     }
 }

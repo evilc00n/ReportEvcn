@@ -1,4 +1,6 @@
+
 using ReportEvcn.Api;
+using ReportEvcn.Api.Middlewares;
 using ReportEvcn.Application.DependencyInjection;
 using ReportEvcn.DAL.DependencyInjection;
 using ReportEvcn.Domain.Settings;
@@ -22,6 +24,7 @@ builder.Services.AddApplications();
 
 var app = builder.Build();
 
+app.UseMiddleware<ExceptionHandlingMiddlewarecs>();
 
 if (app.Environment.IsDevelopment())
 {

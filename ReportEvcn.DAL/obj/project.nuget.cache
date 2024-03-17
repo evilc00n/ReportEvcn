@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "UfbeDupabbxpMnDM0gVNcLq72WW8eJSsGbL9cfpEyy0jy/7ABOgMP8vfD+ozVuBqmZ3+DoqxDIkRa6fu2ls3+w==",
+  "dgSpecHash": "6hMZViLBXUrGyXeZKXemEpiJSA5O9hKrGwZV4kaE7zwRkl6y6sXq9qZE2Vyyb1k5pj3wLbX+vjCgvj8VEIT8QA==",
   "success": true,
-  "projectFilePath": "C:\\dotnet\\lessons\\demo\\ReportEvcn\\ReportEvcn.DAL\\ReportEvcn.DAL.csproj",
+  "projectFilePath": "C:\\dotnet\\aspnet\\petproj\\ReportEvcn\\ReportEvcn.DAL\\ReportEvcn.DAL.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Roman\\.nuget\\packages\\azure.core\\1.24.0\\azure.core.1.24.0.nupkg.sha512",
     "C:\\Users\\Roman\\.nuget\\packages\\azure.identity\\1.6.0\\azure.identity.1.6.0.nupkg.sha512",

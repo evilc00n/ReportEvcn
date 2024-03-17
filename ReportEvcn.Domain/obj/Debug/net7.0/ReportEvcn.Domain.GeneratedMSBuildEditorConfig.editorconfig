@@ -8,4 +8,4 @@ build_property.PlatformNeutralAssembly =
 build_property.EnforceExtendedAnalyzerRules = 
 build_property._SupportedPlatformList = Linux,macOS,Windows
 build_property.RootNamespace = ReportEvcn.Domain
-build_property.ProjectDir = C:\dotnet\lessons\demo\ReportEvcn\ReportEvcn.Domain\
+build_property.ProjectDir = C:\dotnet\aspnet\petproj\ReportEvcn\ReportEvcn.Domain\

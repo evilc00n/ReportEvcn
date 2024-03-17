@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "hNa7/MmssxFCdqLyfrzjJPHLRtWlfkSN3CBwS/LVsCNj4zO21qRyhxBYgcuIOZcKFCQbP2R7qkgkCXsu26XcUA==",
+  "dgSpecHash": "IDLc8DMqD/nMuIkw2r5usq3UIp67qyetUutqFfL1zIHGoInIM8ZPcz125vyX1nlU/BhlFfF43AkYULUGlNLkNA==",
   "success": true,
-  "projectFilePath": "C:\\dotnet\\lessons\\demo\\ReportEvcn\\ReportEvcn.Application\\ReportEvcn.Application.csproj",
+  "projectFilePath": "C:\\dotnet\\aspnet\\petproj\\ReportEvcn\\ReportEvcn.Application\\ReportEvcn.Application.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Roman\\.nuget\\packages\\automapper\\12.0.1\\automapper.12.0.1.nupkg.sha512",
     "C:\\Users\\Roman\\.nuget\\packages\\automapper.extensions.microsoft.dependencyinjection\\12.0.1\\automapper.extensions.microsoft.dependencyinjection.12.0.1.nupkg.sha512",

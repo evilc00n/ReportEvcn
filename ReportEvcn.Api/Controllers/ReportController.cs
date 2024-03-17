@@ -33,8 +33,8 @@ namespace ReportEvcn.Api.Controllers
         ///         "userId": "1"
         ///     }
         /// </remarks>
-        /// <response code="200">Если отчёт создался</response>
-        /// <response code="400">Если отчёт не был создан</response>
+        /// <response code="200">Если отчёты были получены</response>
+        /// <response code="400">Если отчёты не были получены</response>
         [HttpGet("reports/{userId}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -61,8 +61,8 @@ namespace ReportEvcn.Api.Controllers
         ///         "id": "1"
         ///     }
         /// </remarks>
-        /// <response code="200">Если отчёт создался</response>
-        /// <response code="400">Если отчёт не был создан</response>
+        /// <response code="200">Если отчёт был получен</response>
+        /// <response code="400">Если отчёт не был получен</response>
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -90,8 +90,8 @@ namespace ReportEvcn.Api.Controllers
         ///         "id": "1"
         ///     }
         /// </remarks>
-        /// <response code="200">Если отчёт создался</response>
-        /// <response code="400">Если отчёт не был создан</response>
+        /// <response code="200">Если отчёт удалился</response>
+        /// <response code="400">Если отчёт не был удалён</response>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
@@ -150,8 +150,8 @@ namespace ReportEvcn.Api.Controllers
         ///         "description": "Test report2",
         ///     }
         /// </remarks>
-        /// <response code="200">Если отчёт создался</response>
-        /// <response code="400">Если отчёт не был создан</response>
+        /// <response code="200">Если отчёт обновился</response>
+        /// <response code="400">Если отчёт не обновился</response>
         [HttpPut]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]

@@ -24,5 +24,8 @@ namespace ReportEvcn.DAL
         {
             modelBuilder.ApplyConfigurationsFromAssembly(Assembly.GetExecutingAssembly());
         }
+
+
+
     }
 }
