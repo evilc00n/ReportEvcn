@@ -1,4 +1,4 @@
-﻿namespace ReportEvcn.Domain.Dto.Role
+﻿namespace ReportEvcn.Domain.Dto.UserRole
 {
     public class UserRoleDTO
     {

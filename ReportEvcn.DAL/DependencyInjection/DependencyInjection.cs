@@ -4,6 +4,7 @@ using Microsoft.Extensions.DependencyInjection;
 using ReportEvcn.DAL.Interceptors;
 using ReportEvcn.DAL.Repositories;
 using ReportEvcn.Domain.Entity;
+using ReportEvcn.Domain.Interfaces.Databases;
 using ReportEvcn.Domain.Interfaces.Repositories;
 
 namespace ReportEvcn.DAL.DependencyInjection
@@ -26,6 +27,7 @@ namespace ReportEvcn.DAL.DependencyInjection
 
         private static void InitRepositories (this IServiceCollection services)
         {
+            services.AddScoped<IUnitOfWork, UnitOfWork>();
             services.AddScoped<IBaseRepository<User>, BaseRepository<User>>();
             services.AddScoped<IBaseRepository<Role>, BaseRepository<Role>>();
             services.AddScoped<IBaseRepository<UserRole>, BaseRepository<UserRole>>();

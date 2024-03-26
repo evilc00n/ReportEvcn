@@ -152,7 +152,7 @@
             <response code="200">Если роль обновилась</response>
             <response code="400">Если роль не обновилась</response>
         </member>
-        <member name="M:ReportEvcn.Api.Controllers.RoleController.AddRoleForUser(ReportEvcn.Domain.Dto.Role.UserRoleDTO)">
+        <member name="M:ReportEvcn.Api.Controllers.RoleController.AddRoleForUser(ReportEvcn.Domain.Dto.UserRole.UserRoleDTO)">
             <summary>
             Добавление роли пользователю
             </summary>
@@ -163,11 +163,46 @@
                 POST
                 {
                     "Login": "User1"
-                    "RoleName": "Admin"
+                    "RoleId": "3"
                 }
             </remarks>
             <response code="200">Если роль была добавлена пользователю</response>
             <response code="400">Если роль не была добавлена пользователю</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.RoleController.DeleteRoleForUser(ReportEvcn.Domain.Dto.UserRole.DeleteUserRoleDTO)">
+            <summary>
+            Удалена роли у пользователю
+            </summary>
+            <param name="dto"></param>
+            <remarks>
+            Sample request:
+             
+                DELETE
+                {
+                    "Login": "User1"
+                    "RoleName": "Admin"
+                }
+            </remarks>
+            <response code="200">Если роль у пользователя была удалена</response>
+            <response code="400">Если роль у пользователя не была удалена</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.RoleController.UpdateRoleForUser(ReportEvcn.Domain.Dto.UserRole.UpdateUserRoleDTO)">
+            <summary>
+            Обновление роли у пользователю
+            </summary>
+            <param name="dto"></param>
+            <remarks>
+            Sample request:
+            
+                PUT
+                {
+                    "Login": "User1"
+                    "OldRoleId": "2"
+                    "NewRoleId": "3"
+                }
+            </remarks>
+            <response code="200">Если роль у пользователя была обновлена</response>
+            <response code="400">Если роль у пользователя не была обновлена</response>
         </member>
         <member name="M:ReportEvcn.Api.Startup.AddAuthenticationAndAuthorization(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
             <summary>

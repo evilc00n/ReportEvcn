@@ -1,10 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using ReportEvcn.Domain.Interfaces.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ReportEvcn.DAL.Repositories
 {
@@ -19,10 +15,7 @@ namespace ReportEvcn.DAL.Repositories
 
         public IQueryable<TEntity> GetAll()
         {
-
-
             return _dbContext.Set<TEntity>();
-
         }
 
         public async Task<TEntity> CreateAsync(TEntity entity)
@@ -31,35 +24,31 @@ namespace ReportEvcn.DAL.Repositories
                 throw new ArgumentNullException("Entity is null");
 
             await _dbContext.AddAsync(entity);
-            await _dbContext.SaveChangesAsync();
-
             return entity;
-
         }
 
-        public async Task<TEntity> UpdateAsync(TEntity entity)
+        public TEntity Update(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("Entity is null");
 
             _dbContext.Update(entity);
-            await _dbContext.SaveChangesAsync();
 
             return entity;
         }
 
 
-        public async Task<TEntity> RemoveAsync(TEntity entity)
+        public void Remove(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException("Entity is null");
 
             _dbContext.Remove(entity);
-            await _dbContext.SaveChangesAsync();
-
-            return entity;
         }
 
-
+        public async Task<int> SaveChangesAsync()
+        {
+            return await _dbContext.SaveChangesAsync();
+        }
     }
 }

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using ReportEvcn.Application.Services;
 using ReportEvcn.Domain.Dto.Role;
+using ReportEvcn.Domain.Dto.UserRole;
 using ReportEvcn.Domain.Entity;
 using ReportEvcn.Domain.Interfaces.Services;
 using ReportEvcn.Domain.Result;
@@ -8,7 +10,7 @@ using System.Net.Mime;
 
 namespace ReportEvcn.Api.Controllers
 {
-
+    [Authorize(Roles = "Admin")]
     [Consumes(MediaTypeNames.Application.Json)]
     [ApiController]
     [Route("api/[controller]")]
@@ -118,12 +120,12 @@ namespace ReportEvcn.Api.Controllers
         ///     POST
         ///     {
         ///         "Login": "User1"
-        ///         "RoleName": "Admin"
+        ///         "RoleId": "3"
         ///     }
         /// </remarks>
         /// <response code="200">Если роль была добавлена пользователю</response>
         /// <response code="400">Если роль не была добавлена пользователю</response>
-        [HttpPost("addRole")]
+        [HttpPost("add-role")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<BaseResult<RoleDTO>>> AddRoleForUser([FromBody] UserRoleDTO dto)
@@ -135,5 +137,65 @@ namespace ReportEvcn.Api.Controllers
             }
             return BadRequest(responce);
         }
+
+
+        /// <summary>
+        /// Удалена роли у пользователю
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <remarks>
+        /// Sample request:
+        ///  
+        ///     DELETE
+        ///     {
+        ///         "Login": "User1"
+        ///         "RoleName": "Admin"
+        ///     }
+        /// </remarks>
+        /// <response code="200">Если роль у пользователя была удалена</response>
+        /// <response code="400">Если роль у пользователя не была удалена</response>
+        [HttpDelete("delete-role")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<BaseResult<RoleDTO>>> DeleteRoleForUser([FromBody] DeleteUserRoleDTO dto)
+        {
+            var responce = await _roleService.DeleteRoleForUserAsync(dto);
+            if (responce.IsSuccess)
+            {
+                return Ok(responce);
+            }
+            return BadRequest(responce);
+        }
+
+
+        /// <summary>
+        /// Обновление роли у пользователю
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <remarks>
+        /// Sample request:
+        /// 
+        ///     PUT
+        ///     {
+        ///         "Login": "User1"
+        ///         "OldRoleId": "2"
+        ///         "NewRoleId": "3"
+        ///     }
+        /// </remarks>
+        /// <response code="200">Если роль у пользователя была обновлена</response>
+        /// <response code="400">Если роль у пользователя не была обновлена</response>
+        [HttpPut("update-role")]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<BaseResult<RoleDTO>>> UpdateRoleForUser([FromBody] UpdateUserRoleDTO dto)
+        {
+            var responce = await _roleService.UpdateRoleForUserAsync(dto);
+            if (responce.IsSuccess)
+            {
+                return Ok(responce);
+            }
+            return BadRequest(responce);
+        }
+
     }
 }

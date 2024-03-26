@@ -2,8 +2,10 @@
 using Microsoft.EntityFrameworkCore;
 using ReportEvcn.Application.Resources;
 using ReportEvcn.Domain.Dto.Role;
+using ReportEvcn.Domain.Dto.UserRole;
 using ReportEvcn.Domain.Entity;
 using ReportEvcn.Domain.Enum;
+using ReportEvcn.Domain.Interfaces.Databases;
 using ReportEvcn.Domain.Interfaces.Repositories;
 using ReportEvcn.Domain.Interfaces.Services;
 using ReportEvcn.Domain.Result;
@@ -16,15 +18,17 @@ namespace ReportEvcn.Application.Services
         private readonly IBaseRepository<Role> _roleRepository;
         private readonly IBaseRepository<UserRole> _userRoleRepository;
         private readonly IMapper _mapper;
+        private readonly IUnitOfWork _unitOfWork;
 
         public RoleService(IBaseRepository<User> userRepository,
-            IBaseRepository<Role> roleRepository, IMapper mapper, 
-            IBaseRepository<UserRole> userRoleRepository)
+            IBaseRepository<Role> roleRepository, IMapper mapper,
+            IBaseRepository<UserRole> userRoleRepository, IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _mapper = mapper;
             _userRoleRepository = userRoleRepository;
+            _unitOfWork = unitOfWork;
         }
 
 
@@ -48,6 +52,7 @@ namespace ReportEvcn.Application.Services
             };
 
             await _roleRepository.CreateAsync(role);
+            await _roleRepository.SaveChangesAsync();
             return new BaseResult<RoleDTO>()
             {
                 Data = _mapper.Map<RoleDTO>(role)
@@ -68,7 +73,8 @@ namespace ReportEvcn.Application.Services
                 };
             }
 
-            await _roleRepository.RemoveAsync(role);
+            _roleRepository.Remove(role);
+            await _roleRepository.SaveChangesAsync();
             return new BaseResult<RoleDTO>()
             {
                 Data = _mapper.Map<RoleDTO>(role)
@@ -89,10 +95,11 @@ namespace ReportEvcn.Application.Services
             }
             role.Name = dto.Name;
 
-            await _roleRepository.UpdateAsync(role);
+            var updatedRole = _roleRepository.Update(role);
+            await _roleRepository.SaveChangesAsync();
             return new BaseResult<RoleDTO>()
             {
-                Data = _mapper.Map<RoleDTO>(role)
+                Data = _mapper.Map<RoleDTO>(updatedRole)
             };
         }
 
@@ -134,6 +141,7 @@ namespace ReportEvcn.Application.Services
                 };
                 
                 await _userRoleRepository.CreateAsync(userRole);
+                await _userRoleRepository.SaveChangesAsync();
                 return new BaseResult<UserRoleDTO>()
                 {
                     Data = new UserRoleDTO()
@@ -151,6 +159,118 @@ namespace ReportEvcn.Application.Services
             };
 
 
+        }
+
+        ///<inheritdoc/>
+        public async Task<BaseResult<UserRoleDTO>> DeleteRoleForUserAsync(DeleteUserRoleDTO dto)
+        {
+            var user = await _userRepository.GetAll()
+                .Include(x => x.Roles)
+                .FirstOrDefaultAsync(x => x.Login == dto.Login);
+
+            if (user == null)
+            {
+                return new BaseResult<UserRoleDTO>()
+                {
+                    ErrorMessage = ErrorMessage.UserNotFound,
+                    ErrorCode = (int)ErrorCodes.UserNotFound
+                };
+            }
+            var role = user.Roles.FirstOrDefault(x => x.Id == dto.RoleId);
+            if (role == null)
+            {
+                return new BaseResult<UserRoleDTO>()
+                {
+                    ErrorMessage = ErrorMessage.RoleNotFound,
+                    ErrorCode = (int)ErrorCodes.RoleNotFound
+                };
+            }
+
+            var userRole = await _userRoleRepository.GetAll()
+                .Where(x => x.RoleId == role.Id)
+                .FirstOrDefaultAsync(x => x.UserId == user.Id);
+
+            _userRoleRepository.Remove(userRole);
+            await _userRoleRepository.SaveChangesAsync();
+
+            return new BaseResult<UserRoleDTO>()
+            {
+                Data = new UserRoleDTO()
+                {
+                    Login = user.Login,
+                    RoleName = role.Name
+                }
+            };
+        }
+
+        public async Task<BaseResult<UserRoleDTO>> UpdateRoleForUserAsync(UpdateUserRoleDTO dto)
+        {
+            var user = await _userRepository.GetAll()
+                .Include(x => x.Roles)
+                .FirstOrDefaultAsync(x => x.Login == dto.Login);
+
+            if (user == null)
+            {
+                return new BaseResult<UserRoleDTO>()
+                {
+                    ErrorMessage = ErrorMessage.UserNotFound,
+                    ErrorCode = (int)ErrorCodes.UserNotFound
+                };
+            }
+            var role = user.Roles.FirstOrDefault(x => x.Id == dto.OldRoleId);
+            if (role == null)
+            {
+                return new BaseResult<UserRoleDTO>()
+                {
+                    ErrorMessage = ErrorMessage.RoleNotFound,
+                    ErrorCode = (int)ErrorCodes.RoleNotFound
+                };
+            }
+
+            var newRoleForUser = await _roleRepository.GetAll().FirstOrDefaultAsync(x => x.Id == dto.NewRoleId);
+            if (newRoleForUser == null)
+            {
+                return new BaseResult<UserRoleDTO>()
+                {
+                    ErrorMessage = ErrorMessage.RoleNotFound,
+                    ErrorCode = (int)ErrorCodes.RoleNotFound
+                };
+            }
+
+            using (var transaction = await _unitOfWork.BeginTransactionAsync())
+            {
+                try
+                {
+                    var userRole = await _unitOfWork.UserRoles.GetAll()
+                        .Where(x => x.RoleId == role.Id)
+                        .FirstAsync(x => x.UserId == user.Id);
+
+                    _unitOfWork.UserRoles.Remove(userRole);
+                    await _unitOfWork.SaveChangesAsync();
+
+                    var newUserRole = new UserRole()
+                    {
+                        RoleId = newRoleForUser.Id,
+                        UserId = user.Id
+                    };
+                    await _unitOfWork.UserRoles.CreateAsync(newUserRole);
+                    await _unitOfWork.SaveChangesAsync();
+                    await transaction.CommitAsync();
+                }
+                catch (Exception ex)
+                {
+                    await transaction.RollbackAsync();
+                }
+            }
+
+            return new BaseResult<UserRoleDTO>()
+            {
+                Data = new UserRoleDTO()
+                {
+                    Login = user.Login,
+                    RoleName = newRoleForUser.Name
+                }
+            };
         }
     }
 }

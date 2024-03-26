@@ -1,4 +1,5 @@
 ﻿using ReportEvcn.Domain.Dto.Role;
+using ReportEvcn.Domain.Dto.UserRole;
 using ReportEvcn.Domain.Entity;
 using ReportEvcn.Domain.Result;
 
@@ -36,5 +37,21 @@ namespace ReportEvcn.Domain.Interfaces.Services
         /// <param name="id"></param>
         /// <returns></returns>
         Task<BaseResult<UserRoleDTO>> AddRoleForUserAsync(UserRoleDTO dto);
+
+        /// <summary>
+        /// Удаление роли у пользователя
+        /// </summary>
+        /// <param name="login"></param>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        Task<BaseResult<UserRoleDTO>> DeleteRoleForUserAsync(DeleteUserRoleDTO dto);
+
+
+        /// <summary>
+        /// Обновление роли у пользователя
+        /// </summary>
+        /// <param name="dto"></param>
+        /// <returns></returns>
+        Task<BaseResult<UserRoleDTO>> UpdateRoleForUserAsync(UpdateUserRoleDTO dto);
     }
 }

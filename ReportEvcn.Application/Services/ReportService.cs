@@ -9,8 +9,6 @@ using ReportEvcn.Domain.Interfaces.Services;
 using ReportEvcn.Domain.Interfaces.Validations;
 using ReportEvcn.Domain.Result;
 using Serilog;
-using System.Resources;
-using System.Runtime.Versioning;
 
 namespace ReportEvcn.Application.Services
 {
@@ -36,25 +34,10 @@ namespace ReportEvcn.Application.Services
         public async Task<CollectionResult<ReportDTO>> GetReportsAsync(long userId)
         {
             ReportDTO[] reports;
-
-            try
-            {
-                reports = await _reportRepository.GetAll()
-                    .Where(x => x.UserId == userId)
-                    .Select(x => new ReportDTO(x.Id, x.Name, x.Description, x.CreatedAt.ToLongDateString()))
-                    .ToArrayAsync();
-
-                
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, ex.Message);
-                return new CollectionResult<ReportDTO>
-                {
-                    ErrorMessage = ErrorMessage.InternalServerError,
-                    ErrorCode = (int)ErrorCodes.InternarServerError
-                };
-            }
+            reports = await _reportRepository.GetAll()
+                .Where(x => x.UserId == userId)
+                .Select(x => new ReportDTO(x.Id, x.Name, x.Description, x.CreatedAt.ToLongDateString()))
+                .ToArrayAsync();
             
             if (!reports.Any())
             {
@@ -77,24 +60,11 @@ namespace ReportEvcn.Application.Services
         public async Task<BaseResult<ReportDTO>> GetReportByIdAsync(long id)
         {
             ReportDTO? report;
+            report = await _reportRepository.GetAll()
+                .Where(x => x.Id == id)
+                .Select(x => new ReportDTO(x.Id, x.Name, x.Description, x.CreatedAt.ToLongDateString()))
+                .FirstOrDefaultAsync();
 
-
-            try
-            {
-                report = await _reportRepository.GetAll()
-                    .Where(x => x.Id == id)
-                    .Select(x => new ReportDTO(x.Id, x.Name, x.Description, x.CreatedAt.ToLongDateString()))
-                    .FirstOrDefaultAsync();
-            }
-            catch (Exception ex)
-            {
-                _logger.Error(ex, ex.Message);
-                return new BaseResult<ReportDTO>
-                {
-                    ErrorMessage = ErrorMessage.InternalServerError,
-                    ErrorCode = (int)ErrorCodes.InternarServerError
-                };
-            }
 
             if (report == null)
             {
@@ -115,108 +85,75 @@ namespace ReportEvcn.Application.Services
         /// <inheritdoc />
         public async Task<BaseResult<ReportDTO>> CreateReportAsync(CreateReportDTO dto)
         {
-            try
+            var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.Id == dto.UserId);
+            var report = await _reportRepository.GetAll().FirstOrDefaultAsync(x => x.Name == dto.Name);
+            var result = _reportValidator.CreateValidator(report, user);
+            if (!result.IsSuccess)
             {
-                var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.Id == dto.UserId);
-                var report = await _reportRepository.GetAll().FirstOrDefaultAsync(x => x.Name == dto.Name);
-                var result = _reportValidator.CreateValidator(report, user);
-                if (!result.IsSuccess)
-                {
-                    return new BaseResult<ReportDTO>()
-                    {
-                        ErrorMessage = result.ErrorMessage,
-                        ErrorCode = result.ErrorCode,   
-                    };
-                }
-                report = new Report()
-                {
-                    Name = dto.Name,
-                    Description = dto.Description,
-                    UserId = user.Id
-                    
-                };
-                await _reportRepository.CreateAsync(report);
-
                 return new BaseResult<ReportDTO>()
                 {
-                    Data = _mapper.Map<ReportDTO>(report)
+                    ErrorMessage = result.ErrorMessage,
+                    ErrorCode = result.ErrorCode,
                 };
-
             }
-            catch (Exception ex)
+            report = new Report()
             {
-                _logger.Error(ex, ex.Message);
-                return new BaseResult<ReportDTO>
-                {
-                    ErrorMessage = ErrorMessage.InternalServerError,
-                    ErrorCode = (int)ErrorCodes.InternarServerError
-                };
-            }
+                Name = dto.Name,
+                Description = dto.Description,
+                UserId = user.Id
+
+            };
+            await _reportRepository.CreateAsync(report);
+            await _reportRepository.SaveChangesAsync();
+
+            return new BaseResult<ReportDTO>()
+            {
+                Data = _mapper.Map<ReportDTO>(report)
+            };
+
         }
 
         public async Task<BaseResult<ReportDTO>> DeleteReportAsync(long id)
         {
-            try
+            var report = await _reportRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var result = _reportValidator.ValidateOnNull(report);
+            if (!result.IsSuccess)
             {
-                var report = await _reportRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
-                var result = _reportValidator.ValidateOnNull(report);
-                if (!result.IsSuccess)
-                {
-                    return new BaseResult<ReportDTO>()
-                    {
-                        ErrorMessage = result.ErrorMessage,
-                        ErrorCode = result.ErrorCode,
-                    };
-                }
-                await _reportRepository.RemoveAsync(report);
                 return new BaseResult<ReportDTO>()
                 {
-                    Data = _mapper.Map<ReportDTO>(report)
+                    ErrorMessage = result.ErrorMessage,
+                    ErrorCode = result.ErrorCode,
                 };
             }
-            catch (Exception ex)
+            _reportRepository.Remove(report);
+            await _reportRepository.SaveChangesAsync();
+            return new BaseResult<ReportDTO>()
             {
-                _logger.Error(ex, ex.Message);
-                return new BaseResult<ReportDTO>
-                {
-                    ErrorMessage = ErrorMessage.InternalServerError,
-                    ErrorCode = (int)ErrorCodes.InternarServerError
-                };
-            }
+                Data = _mapper.Map<ReportDTO>(report)
+            };
         }
 
         public async Task<BaseResult<ReportDTO>> UpdateReportAsync(UpdateReportDTO dto)
         {
-            try
+            var report = await _reportRepository.GetAll().FirstOrDefaultAsync(x => x.Id == dto.Id);
+            var result = _reportValidator.ValidateOnNull(report);
+            if (!result.IsSuccess)
             {
-                var report = await _reportRepository.GetAll().FirstOrDefaultAsync(x => x.Id == dto.Id);
-                var result = _reportValidator.ValidateOnNull(report);
-                if (!result.IsSuccess)
-                {
-                    return new BaseResult<ReportDTO>()
-                    {
-                        ErrorMessage = result.ErrorMessage,
-                        ErrorCode = result.ErrorCode,
-                    };
-                }
-
-                report.Name = dto.Name;
-                report.Description = dto.Description;
-                await _reportRepository.UpdateAsync(report);
                 return new BaseResult<ReportDTO>()
                 {
-                    Data = _mapper.Map<ReportDTO>(report)
+                    ErrorMessage = result.ErrorMessage,
+                    ErrorCode = result.ErrorCode,
                 };
             }
-            catch (Exception ex)
+
+            report.Name = dto.Name;
+            report.Description = dto.Description;
+            var updatedReport = _reportRepository.Update(report);
+            await _reportRepository.SaveChangesAsync();
+            return new BaseResult<ReportDTO>()
             {
-                _logger.Error(ex, ex.Message);
-                return new BaseResult<ReportDTO>
-                {
-                    ErrorMessage = ErrorMessage.InternalServerError,
-                    ErrorCode = (int)ErrorCodes.InternarServerError
-                };
-            }
+                Data = _mapper.Map<ReportDTO>(updatedReport)
+            };
         }
     }
 }
