@@ -18,17 +18,17 @@ namespace ReportEvcn.DAL.Configuration
             {
                 new Role()
                 {
-                    Id = 1,
+                    Id = Guid.NewGuid(),
                     Name = nameof(Roles.User)
                 },
                 new Role()
                 {
-                    Id = 2,
+                    Id = Guid.NewGuid(),
                     Name = nameof(Roles.Admin)
                 },
                 new Role()
                 {
-                    Id = 3,
+                    Id = Guid.NewGuid(),
                     Name = nameof(Roles.Moderator)
                 },
 

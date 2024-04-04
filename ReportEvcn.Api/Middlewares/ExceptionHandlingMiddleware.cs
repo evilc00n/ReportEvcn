@@ -1,16 +1,17 @@
-﻿using ReportEvcn.Domain.Enum;
+﻿using Microsoft.IdentityModel.Tokens;
+using ReportEvcn.Domain.Enum;
 using ReportEvcn.Domain.Result;
 using Serilog;
 using ILogger = Serilog.ILogger;
 
 namespace ReportEvcn.Api.Middlewares
 {
-    public class ExceptionHandlingMiddlewarecs
+    public class ExceptionHandlingMiddleware
     {
         private readonly RequestDelegate _next;
         private readonly ILogger _logger;
 
-        public ExceptionHandlingMiddlewarecs(RequestDelegate next, ILogger logger)
+        public ExceptionHandlingMiddleware(RequestDelegate next, ILogger logger)
         {
             _next = next;
             _logger = logger;
@@ -30,9 +31,11 @@ namespace ReportEvcn.Api.Middlewares
 
         private async Task HandleExceptionAsync(HttpContext httpContext, Exception exception)
         {
+            Console.WriteLine(exception.GetType());
             _logger.Error(exception, exception.Message);
 
             var errorMeassage = exception.Message;
+
 
             var responce = exception switch
             {
@@ -41,11 +44,16 @@ namespace ReportEvcn.Api.Middlewares
                     ErrorMessage = errorMeassage,
                     ErrorCode = (int)ErrorCodes.UnauthorizedAccess
                 },
+                SecurityTokenException _ => new BaseResult()
+                {
+                    ErrorMessage = errorMeassage,
+                    ErrorCode = (int)ErrorCodes.InvalidToken
+                },
                 _  => new BaseResult()
                 {
-                    ErrorMessage = "Internal Server Error. Please retry later",
+                    ErrorMessage = "An unexpected error has occurred",
                     ErrorCode = (int)ErrorCodes.InternarServerError
-                },
+                }
             };
 
             httpContext.Response.ContentType = "application/json";

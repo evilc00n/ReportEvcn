@@ -1,8 +1,4 @@
 ﻿namespace ReportEvcn.Domain.Dto.Role
 {
-    public class CreateRoleDTO
-    {
-        public string Name { get; set; }
-
-    }
+    public record CreateRoleDTO(string Name);
 }

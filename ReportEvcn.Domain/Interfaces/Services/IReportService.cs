@@ -1,4 +1,6 @@
-﻿using ReportEvcn.Domain.Dto.Report;
+﻿using ReportEvcn.Domain.Dto;
+using ReportEvcn.Domain.Dto.Report;
+using ReportEvcn.Domain.Entity;
 using ReportEvcn.Domain.Result;
 
 
@@ -14,36 +16,39 @@ namespace ReportEvcn.Domain.Interfaces.Services
         /// <summary>
         /// Получение всех отчётов пользователя.
         /// </summary>
-        /// <param name="userId"></param>
+        /// <param name="login"></param>
         /// <returns></returns>
-        Task<CollectionResult<ReportDTO>> GetReportsAsync(long userId);
+        Task<CollectionResult<ReportDTO>> GetReportsAsync(Guid userId);
 
         /// <summary>
         /// Получение отчёта по индентификатору.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="login"></param>
         /// <returns></returns>
-        Task<BaseResult<ReportDTO>> GetReportByIdAsync(long id);
+        Task<BaseResult<ReportDTO>> GetReportByIdAsync(Guid id, Guid userId);
 
         /// <summary>
         /// Создание отчёта с базовыми параметрами.
         /// </summary>
         /// <param name="dto"></param>
+        /// <param name="login"></param>
         /// <returns></returns>
-        Task<BaseResult<ReportDTO>> CreateReportAsync(CreateReportDTO dto);
+        Task<BaseResult<ReportDTO>> CreateReportAsync(CreateReportDTO dto, Guid userId);
 
         /// <summary>
         /// Удаление отчёта по id.
         /// </summary>
         /// <param name="id"></param>
+        /// <param name="login"></param>
         /// <returns></returns>
-        Task<BaseResult<ReportDTO>> DeleteReportAsync(long id);
+        Task<BaseResult<ReportDTO>> DeleteReportAsync(Guid id, Guid userId);
 
         /// <summary>
         /// Обновление отчёта.
         /// </summary>
         /// <param name="dto"></param>
         /// <returns></returns>
-        Task<BaseResult<ReportDTO>> UpdateReportAsync(UpdateReportDTO dto);
+        Task<BaseResult<ReportDTO>> UpdateReportAsync(UpdateReportDTO dto, Guid userId);
     }
 }

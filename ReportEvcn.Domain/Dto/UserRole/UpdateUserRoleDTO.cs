@@ -1,10 +1,6 @@
 ﻿
 namespace ReportEvcn.Domain.Dto.UserRole
 {
-    public class UpdateUserRoleDTO
-    {
-        public string Login { get; set; }
-        public long OldRoleId { get; set; }
-        public long NewRoleId { get; set; }
-    }
+    public record UpdateUserRoleDTO(string Login, Guid OldRoleId, Guid NewRoleId);
+
 }

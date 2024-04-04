@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 using ReportEvcn.Application.Resources;
+using ReportEvcn.Domain.Dto.Report;
 using ReportEvcn.Domain.Dto.Role;
 using ReportEvcn.Domain.Dto.UserRole;
 using ReportEvcn.Domain.Entity;
@@ -9,6 +10,7 @@ using ReportEvcn.Domain.Interfaces.Databases;
 using ReportEvcn.Domain.Interfaces.Repositories;
 using ReportEvcn.Domain.Interfaces.Services;
 using ReportEvcn.Domain.Result;
+using Serilog;
 
 namespace ReportEvcn.Application.Services
 {
@@ -18,24 +20,53 @@ namespace ReportEvcn.Application.Services
         private readonly IBaseRepository<Role> _roleRepository;
         private readonly IBaseRepository<UserRole> _userRoleRepository;
         private readonly IMapper _mapper;
+        private readonly ILogger _logger;
         private readonly IUnitOfWork _unitOfWork;
 
         public RoleService(IBaseRepository<User> userRepository,
             IBaseRepository<Role> roleRepository, IMapper mapper,
-            IBaseRepository<UserRole> userRoleRepository, IUnitOfWork unitOfWork)
+            IBaseRepository<UserRole> userRoleRepository, 
+            IUnitOfWork unitOfWork, ILogger logger)
         {
             _userRepository = userRepository;
             _roleRepository = roleRepository;
             _mapper = mapper;
             _userRoleRepository = userRoleRepository;
             _unitOfWork = unitOfWork;
+            _logger = logger;
+        }
+
+        /// <inheritdoc />
+        public async Task<CollectionResult<RoleDTO>> GetAllRolesAsync()
+        {
+            var roles = await _roleRepository.GetAll()
+                .Select(x => _mapper.Map<RoleDTO>(x))
+                .ToArrayAsync();
+
+            if (roles == null || roles.Length == 0)
+            {
+                _logger.Error(ErrorMessage.RoleNotFound);
+                return new CollectionResult<RoleDTO>
+                {
+                    ErrorMessage = ErrorMessage.RoleNotFound,
+                    ErrorCode = (int)ErrorCodes.RoleNotFound
+                };
+            }
+
+
+            return new CollectionResult<RoleDTO>
+            {
+                Data = roles,
+                Count= roles.Length
+            };
         }
 
 
         /// <inheritdoc />
         public async Task<BaseResult<RoleDTO>> CreateRoleAsync(CreateRoleDTO dto)
         {
-            var role = await _roleRepository.GetAll().FirstOrDefaultAsync(x => x.Name == dto.Name);
+            var role = await _roleRepository.GetAll()
+                .FirstOrDefaultAsync(x => x.Name == dto.Name);
 
             if (role != null) 
             {
@@ -61,9 +92,10 @@ namespace ReportEvcn.Application.Services
         }
 
         /// <inheritdoc />
-        public async Task<BaseResult<RoleDTO>> DeleteRoleAsync(long id)
+        public async Task<BaseResult<RoleDTO>> DeleteRoleAsync(Guid id)
         {
-            var role = await _roleRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var role = await _roleRepository.GetAll()
+                .FirstOrDefaultAsync(x => x.Id == id);
             if (role == null)
             {
                 return new BaseResult<RoleDTO>()
@@ -84,7 +116,8 @@ namespace ReportEvcn.Application.Services
         /// <inheritdoc />
         public async Task<BaseResult<RoleDTO>> UpdateRoleAsync(UpdateRoleDTO dto)
         {
-            var role = await _roleRepository.GetAll().FirstOrDefaultAsync(x => x.Id == dto.Id);
+            var role = await _roleRepository.GetAll()
+                .FirstOrDefaultAsync(x => x.Id == dto.Id);
             if (role == null)
             {
                 return new BaseResult<RoleDTO>()
@@ -119,11 +152,11 @@ namespace ReportEvcn.Application.Services
                 };
             }
 
-            var roles = user.Roles.Select(x => x.Name).ToArray();
-            if (!roles.Any(x => x == dto.RoleName))
+            var roles = user.Roles.Select(x => x.Id).ToArray();
+            if (!roles.Any(x => x == dto.RoleId))
             {
                 var role = await _roleRepository.GetAll()
-                    .FirstOrDefaultAsync(x => x.Name == dto.RoleName);
+                    .FirstOrDefaultAsync(x => x.Id == dto.RoleId);
 
                 if (role == null)
                 {
@@ -144,11 +177,7 @@ namespace ReportEvcn.Application.Services
                 await _userRoleRepository.SaveChangesAsync();
                 return new BaseResult<UserRoleDTO>()
                 {
-                    Data = new UserRoleDTO()
-                    {
-                        Login = user.Login,
-                        RoleName = role.Name
-                    }
+                    Data = new UserRoleDTO(Login: user.Login, RoleId:role.Id)
                 };
             }
 
@@ -195,11 +224,7 @@ namespace ReportEvcn.Application.Services
 
             return new BaseResult<UserRoleDTO>()
             {
-                Data = new UserRoleDTO()
-                {
-                    Login = user.Login,
-                    RoleName = role.Name
-                }
+                Data = new UserRoleDTO(Login:user.Login, RoleId:role.Id)
             };
         }
 
@@ -217,7 +242,8 @@ namespace ReportEvcn.Application.Services
                     ErrorCode = (int)ErrorCodes.UserNotFound
                 };
             }
-            var role = user.Roles.FirstOrDefault(x => x.Id == dto.OldRoleId);
+            var role = user.Roles
+                .FirstOrDefault(x => x.Id == dto.OldRoleId);
             if (role == null)
             {
                 return new BaseResult<UserRoleDTO>()
@@ -227,7 +253,8 @@ namespace ReportEvcn.Application.Services
                 };
             }
 
-            var newRoleForUser = await _roleRepository.GetAll().FirstOrDefaultAsync(x => x.Id == dto.NewRoleId);
+            var newRoleForUser = await _roleRepository.GetAll()
+                .FirstOrDefaultAsync(x => x.Id == dto.NewRoleId);
             if (newRoleForUser == null)
             {
                 return new BaseResult<UserRoleDTO>()
@@ -265,12 +292,10 @@ namespace ReportEvcn.Application.Services
 
             return new BaseResult<UserRoleDTO>()
             {
-                Data = new UserRoleDTO()
-                {
-                    Login = user.Login,
-                    RoleName = newRoleForUser.Name
-                }
+                Data = new UserRoleDTO(Login: user.Login, RoleId : newRoleForUser.Id)
             };
         }
+
+
     }
 }

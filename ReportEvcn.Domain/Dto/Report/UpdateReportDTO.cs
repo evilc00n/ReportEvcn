@@ -1,4 +1,4 @@
 ﻿namespace ReportEvcn.Domain.Dto.Report
 {
-    public record UpdateReportDTO(long Id, string Name, string Description);
+    public record UpdateReportDTO(Guid Id, string Name, string Description);
 }

@@ -1,6 +1,4 @@
-﻿using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.Mvc;
-using ReportEvcn.Application.Services;
+﻿using Microsoft.AspNetCore.Mvc;
 using ReportEvcn.Domain.Dto;
 using ReportEvcn.Domain.Interfaces.Services;
 using ReportEvcn.Domain.Result;

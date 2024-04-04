@@ -1,10 +1,6 @@
 ﻿using FluentValidation;
 using ReportEvcn.Domain.Dto.Report;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+
 
 namespace ReportEvcn.Application.Validations.FluentFalidations.Report
 {

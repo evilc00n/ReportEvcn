@@ -3,9 +3,9 @@
 
 namespace ReportEvcn.Domain.Entity
 {
-    public class Report : IEntityId<long>, IAuditable
+    public class Report : IEntityId<Guid>, IAuditable
     {
-        public long Id { get; set ; }
+        public Guid Id { get; set ; }
 
         public string Name { get; set; }
 
@@ -13,12 +13,22 @@ namespace ReportEvcn.Domain.Entity
 
         public User User { get; set; }
 
-        public long UserId { get; set; }
+        public Guid UserId { get; set; }
 
         public DateTime CreatedAt { get; set; }
         public long CreatedBy { get; set; }
         public DateTime? UpdatedAt { get; set; }
         public long? UpdatedBy { get; set; }
+
+        public Report() { }
+
+        public Report(Guid id, string name, string description, DateTime createdAt)
+        {
+            Id = id;
+            Name = name;
+            Description = description;
+            CreatedAt = createdAt;
+        }
 
 
     }

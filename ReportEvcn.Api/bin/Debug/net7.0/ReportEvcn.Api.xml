@@ -19,23 +19,14 @@
             <returns></returns>
             <exception cref="T:System.NotImplementedException"></exception>
         </member>
-        <member name="M:ReportEvcn.Api.Controllers.ReportController.GetUserReports(System.Int64)">
+        <member name="M:ReportEvcn.Api.Controllers.ReportController.GetUserReports">
             <summary>
             Получение отчётов пользователя
             </summary>
-            <param name="userId"></param>
-            <remarks>
-            Sample request:
-             
-                GET
-                {
-                    "userId": "1"
-                }
-            </remarks>
             <response code="200">Если отчёты были получены</response>
             <response code="400">Если отчёты не были получены</response>
         </member>
-        <member name="M:ReportEvcn.Api.Controllers.ReportController.GetReport(System.Int64)">
+        <member name="M:ReportEvcn.Api.Controllers.ReportController.GetReport(System.Guid)">
             <summary>
             Получение отчётов с указанием идентификатора
             </summary>
@@ -51,7 +42,7 @@
             <response code="200">Если отчёт был получен</response>
             <response code="400">Если отчёт не был получен</response>
         </member>
-        <member name="M:ReportEvcn.Api.Controllers.ReportController.DeleteReport(System.Int64)">
+        <member name="M:ReportEvcn.Api.Controllers.ReportController.DeleteReport(System.Guid)">
             <summary>
             Удаление отчёта с указанием идентификатора
             </summary>
@@ -119,19 +110,11 @@
             <response code="200">Если отчёт создался</response>
             <response code="400">Если отчёт не был создан</response>
         </member>
-        <member name="M:ReportEvcn.Api.Controllers.RoleController.Delete(System.Int64)">
+        <member name="M:ReportEvcn.Api.Controllers.RoleController.Delete(System.Guid)">
             <summary>
             Удаление роли с указанием идентификатора
             </summary>
             <param name="id"></param>
-            <remarks>
-            Sample request:
-             
-                DELETE
-                {
-                    "id": "1"
-                }
-            </remarks>
             <response code="200">Если роль удалилась</response>
             <response code="400">Если роль не была удалена</response>
         </member>
@@ -203,6 +186,13 @@
             </remarks>
             <response code="200">Если роль у пользователя была обновлена</response>
             <response code="400">Если роль у пользователя не была обновлена</response>
+        </member>
+        <member name="M:ReportEvcn.Api.Controllers.UserController.GetUserData">
+            <summary>
+            Получение данных пользователя
+            </summary>
+            <response code="200">Если данные были получены</response>
+            <response code="400">Если данные не были получены</response>
         </member>
         <member name="M:ReportEvcn.Api.Startup.AddAuthenticationAndAuthorization(Microsoft.Extensions.DependencyInjection.IServiceCollection,Microsoft.AspNetCore.Builder.WebApplicationBuilder)">
             <summary>

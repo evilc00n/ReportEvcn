@@ -18,7 +18,8 @@
         
 
         InternarServerError = 44,
+        InvalidAuthorizationHeader = 51,
+        InvalidToken = 52
 
-    
     }
 }

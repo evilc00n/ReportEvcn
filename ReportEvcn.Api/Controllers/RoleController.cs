@@ -24,6 +24,22 @@ namespace ReportEvcn.Api.Controllers
             _roleService = roleService;
         }
 
+        [HttpGet]
+        [ProducesResponseType(StatusCodes.Status200OK)]
+        [ProducesResponseType(StatusCodes.Status400BadRequest)]
+        public async Task<ActionResult<BaseResult<RoleDTO>>> GetAllRoles()
+        {
+            var responce = await _roleService.GetAllRolesAsync();
+            if (responce.IsSuccess)
+            {
+                return Ok(responce);
+            }
+            return BadRequest(responce);
+        }
+
+
+
+
         /// <summary>
         /// Создание роли
         /// </summary>
@@ -56,20 +72,12 @@ namespace ReportEvcn.Api.Controllers
         /// Удаление роли с указанием идентификатора
         /// </summary>
         /// <param name="id"></param>
-        /// <remarks>
-        /// Sample request:
-        ///  
-        ///     DELETE
-        ///     {
-        ///         "id": "1"
-        ///     }
-        /// </remarks>
         /// <response code="200">Если роль удалилась</response>
         /// <response code="400">Если роль не была удалена</response>
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<BaseResult<RoleDTO>>> Delete(long id)
+        public async Task<ActionResult<BaseResult<RoleDTO>>> Delete(Guid id)
         {
             var responce = await _roleService.DeleteRoleAsync(id);
             if (responce.IsSuccess)
@@ -137,6 +145,8 @@ namespace ReportEvcn.Api.Controllers
             }
             return BadRequest(responce);
         }
+
+
 
 
         /// <summary>

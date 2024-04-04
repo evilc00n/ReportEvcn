@@ -31,17 +31,29 @@ namespace ReportEvcn.Application.Services
         }
 
         /// <inheritdoc />
-        public async Task<CollectionResult<ReportDTO>> GetReportsAsync(long userId)
+        public async Task<CollectionResult<ReportDTO>> GetReportsAsync(Guid userId)
         {
+            var user = await _userRepository.GetAll()
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            if (user == null)
+            {
+                _logger.Error(ErrorMessage.UserNotFound);
+                return new CollectionResult<ReportDTO>()
+                {
+                    ErrorMessage = ErrorMessage.UserNotFound,
+                    ErrorCode = (int)ErrorCodes.UserNotFound
+                };
+            }
+
             ReportDTO[] reports;
             reports = await _reportRepository.GetAll()
-                .Where(x => x.UserId == userId)
-                .Select(x => new ReportDTO(x.Id, x.Name, x.Description, x.CreatedAt.ToLongDateString()))
+                .Where(x => x.UserId == user.Id)
+                .Select(x => _mapper.Map<ReportDTO>(x))
                 .ToArrayAsync();
             
             if (!reports.Any())
             {
-                _logger.Warning(ErrorMessage.ReportsNotFound, reports.Length);
                 return new CollectionResult<ReportDTO>
                 {
                     ErrorMessage = ErrorMessage.ReportsNotFound,
@@ -57,24 +69,25 @@ namespace ReportEvcn.Application.Services
         }
 
         /// <inheritdoc />
-        public async Task<BaseResult<ReportDTO>> GetReportByIdAsync(long id)
+        public async Task<BaseResult<ReportDTO>> GetReportByIdAsync(Guid id, Guid userId)
         {
+
             ReportDTO? report;
             report = await _reportRepository.GetAll()
-                .Where(x => x.Id == id)
-                .Select(x => new ReportDTO(x.Id, x.Name, x.Description, x.CreatedAt.ToLongDateString()))
+                .Where(x => x.Id == id && x.UserId == userId)
+                .Select(x => _mapper.Map<ReportDTO>(x))
                 .FirstOrDefaultAsync();
 
 
             if (report == null)
             {
-                _logger.Warning($"Report with {id} was not found", id);
                 return new BaseResult<ReportDTO>
                 {
                     ErrorMessage = ErrorMessage.ReportNotFound,
                     ErrorCode = (int)ErrorCodes.ReportNotFound
                 };
             }
+
 
             return new BaseResult<ReportDTO>
             {
@@ -83,13 +96,18 @@ namespace ReportEvcn.Application.Services
         }
 
         /// <inheritdoc />
-        public async Task<BaseResult<ReportDTO>> CreateReportAsync(CreateReportDTO dto)
+        public async Task<BaseResult<ReportDTO>> CreateReportAsync(CreateReportDTO dto, Guid userId)
         {
-            var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.Id == dto.UserId);
+            var user = await _userRepository.GetAll().FirstOrDefaultAsync(x => x.Id == userId);
             var report = await _reportRepository.GetAll().FirstOrDefaultAsync(x => x.Name == dto.Name);
             var result = _reportValidator.CreateValidator(report, user);
             if (!result.IsSuccess)
             {
+                if(result.ErrorCode == (int)ErrorCodes.UserNotFound)
+                {
+                    _logger.Error(ErrorMessage.UserNotFound);
+                }
+
                 return new BaseResult<ReportDTO>()
                 {
                     ErrorMessage = result.ErrorMessage,
@@ -113,9 +131,10 @@ namespace ReportEvcn.Application.Services
 
         }
 
-        public async Task<BaseResult<ReportDTO>> DeleteReportAsync(long id)
+        public async Task<BaseResult<ReportDTO>> DeleteReportAsync(Guid id, Guid userId)
         {
-            var report = await _reportRepository.GetAll().FirstOrDefaultAsync(x => x.Id == id);
+            var report = await _reportRepository.GetAll()
+                .FirstOrDefaultAsync(x => x.Id == id && x.UserId == userId);
             var result = _reportValidator.ValidateOnNull(report);
             if (!result.IsSuccess)
             {
@@ -133,9 +152,10 @@ namespace ReportEvcn.Application.Services
             };
         }
 
-        public async Task<BaseResult<ReportDTO>> UpdateReportAsync(UpdateReportDTO dto)
+        public async Task<BaseResult<ReportDTO>> UpdateReportAsync(UpdateReportDTO dto, Guid userId)
         {
-            var report = await _reportRepository.GetAll().FirstOrDefaultAsync(x => x.Id == dto.Id);
+            var report = await _reportRepository.GetAll()
+                .FirstOrDefaultAsync(x => x.Id == dto.Id && x.UserId == userId);
             var result = _reportValidator.ValidateOnNull(report);
             if (!result.IsSuccess)
             {

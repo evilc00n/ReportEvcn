@@ -2,8 +2,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ReportEvcn.Domain.Dto.Report;
+using ReportEvcn.Domain.Entity;
 using ReportEvcn.Domain.Interfaces.Services;
 using ReportEvcn.Domain.Result;
+using System.Security.Claims;
 
 namespace ReportEvcn.Api.Controllers
 {
@@ -24,23 +26,15 @@ namespace ReportEvcn.Api.Controllers
         /// <summary>
         /// Получение отчётов пользователя
         /// </summary>
-        /// <param name="userId"></param>
-        /// <remarks>
-        /// Sample request:
-        ///  
-        ///     GET
-        ///     {
-        ///         "userId": "1"
-        ///     }
-        /// </remarks>
         /// <response code="200">Если отчёты были получены</response>
         /// <response code="400">Если отчёты не были получены</response>
-        [HttpGet("reports/{userId}")]
+        [HttpGet("reports")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<BaseResult<ReportDTO>>> GetUserReports(long userId)
+        public async Task<ActionResult<BaseResult<ReportDTO>>> GetUserReports()
         {
-            var responce = await _reportService.GetReportsAsync(userId);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var responce = await _reportService.GetReportsAsync(new Guid(userId));
             if (responce.IsSuccess)
             {
                 return Ok(responce);
@@ -66,9 +60,10 @@ namespace ReportEvcn.Api.Controllers
         [HttpGet("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<BaseResult<ReportDTO>>> GetReport(long id)
+        public async Task<ActionResult<BaseResult<ReportDTO>>> GetReport(Guid id)
         {
-            var responce = await _reportService.GetReportByIdAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var responce = await _reportService.GetReportByIdAsync(id, new Guid(userId));
             if (responce.IsSuccess)
             {
                return Ok(responce);
@@ -95,9 +90,10 @@ namespace ReportEvcn.Api.Controllers
         [HttpDelete("{id}")]
         [ProducesResponseType(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<ActionResult<BaseResult<ReportDTO>>> DeleteReport(long id)
+        public async Task<ActionResult<BaseResult<ReportDTO>>> DeleteReport(Guid id)
         {
-            var responce = await _reportService.DeleteReportAsync(id);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var responce = await _reportService.DeleteReportAsync(id, new Guid(userId));
             if (responce.IsSuccess)
             {
                 return Ok(responce);
@@ -128,7 +124,8 @@ namespace ReportEvcn.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<BaseResult<ReportDTO>>> CreateReport([FromBody]CreateReportDTO dto)
         {
-            var responce = await _reportService.CreateReportAsync(dto);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var responce = await _reportService.CreateReportAsync(dto, new Guid(userId));
             if (responce.IsSuccess)
             {
                 return Ok(responce);
@@ -157,7 +154,8 @@ namespace ReportEvcn.Api.Controllers
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
         public async Task<ActionResult<BaseResult<ReportDTO>>> UpdateReport([FromBody] UpdateReportDTO dto)
         {
-            var responce = await _reportService.UpdateReportAsync(dto);
+            var userId = User.FindFirstValue(ClaimTypes.NameIdentifier);
+            var responce = await _reportService.UpdateReportAsync(dto, new Guid(userId));
             if (responce.IsSuccess)
             {
                 return Ok(responce);

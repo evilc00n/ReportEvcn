@@ -32,12 +32,12 @@ namespace ReportEvcn.Application.Services
             IUnitOfWork unitOfWork)
         {
             _userRepository = userRepository;
-            _logger = logger;
             _mapper = mapper;
             _tokenService = tokenService;
             _userTokenRepository = userTokenRepository;
             _roleRepository = roleRepository;
             _unitOfWork = unitOfWork;
+            _logger = logger;
         }
 
 
@@ -58,6 +58,7 @@ namespace ReportEvcn.Application.Services
 
             if (!IsVerifyPassword(user.Password, dto.Password))
             {
+
                 return new BaseResult<TokenDTO>
                 {
                     ErrorMessage = ErrorMessage.PasswordIsWrong,
@@ -72,6 +73,7 @@ namespace ReportEvcn.Application.Services
 
             var claims = userRoles.Select(x => new Claim(ClaimTypes.Role, x.Name)).ToList();
             claims.Add(new Claim(ClaimTypes.Name, user.Login));
+            claims.Add(new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()));
 
 
             var refreshToken = _tokenService.GenerateRefreshToken();
@@ -92,17 +94,13 @@ namespace ReportEvcn.Application.Services
             {
                 userToken.RefreshToken = refreshToken;
                 userToken.RefreshTokenExpireTime = DateTime.UtcNow.AddDays(7);
-                var updatedUserToken = _userTokenRepository.Update(userToken);
+                _userTokenRepository.Update(userToken);
                 await _userTokenRepository.SaveChangesAsync();
             }
 
             return new BaseResult<TokenDTO>()
             {
-                Data = new TokenDTO()
-                {
-                    AccessToken = accessToken,
-                    RefreshToken = userToken.RefreshToken
-                }
+                Data = new TokenDTO(AccessToken: accessToken)
             };
         }
 
@@ -147,6 +145,7 @@ namespace ReportEvcn.Application.Services
 
                     if (role == null)
                     {
+                        _logger.Error(ErrorMessage.RoleNotFound);
                         return new BaseResult<UserDTO>()
                         {
                             ErrorMessage = ErrorMessage.RoleNotFound,
@@ -167,6 +166,12 @@ namespace ReportEvcn.Application.Services
                 catch(Exception ex)
                 {
                     await transaction.RollbackAsync();
+                    _logger.Error(ex.ToString());
+                    return new BaseResult<UserDTO>()
+                    {
+                        ErrorMessage = ErrorMessage.InternalServerError,
+                        ErrorCode = (int)ErrorCodes.InternarServerError
+                    };
                 }
             }
 

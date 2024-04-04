@@ -9,7 +9,15 @@ namespace ReportEvcn.Application.Mapping
     {
         public RoleMapping()
         {
-            CreateMap<Role, RoleDTO>().ReverseMap();
+
+            CreateMap<Role, RoleDTO>()
+                .ForCtorParam(ctorParamName: "Id", m => m.MapFrom(s => s.Id))
+                .ForCtorParam(ctorParamName: "Name", m => m.MapFrom(s => s.Name));
+
+
+            CreateMap<RoleDTO, Role>()
+                .ForCtorParam(ctorParamName: "Id", m => m.MapFrom(s => s.Id))
+                .ForCtorParam(ctorParamName: "Name", m => m.MapFrom(s => s.Name));
         }
     }
 }

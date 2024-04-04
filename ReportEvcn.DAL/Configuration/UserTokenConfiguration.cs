@@ -8,20 +8,10 @@ namespace ReportEvcn.DAL.Configuration
     {
         public void Configure(EntityTypeBuilder<UserToken> builder)
         {
+            builder.HasKey(x => x.Id);
             builder.Property(x => x.Id).ValueGeneratedOnAdd();
             builder.Property(x => x.RefreshToken).IsRequired();
             builder.Property(x => x.RefreshTokenExpireTime).IsRequired();
-
-            builder.HasData(new List<UserToken>
-            {
-                new UserToken()
-                {
-                    Id= 1,
-                    RefreshToken = "dasw23ASAgSeGSE2342agergaeQHQHqr",
-                    RefreshTokenExpireTime = DateTime.UtcNow.AddDays(7),
-                    UserId = 1
-                }
-            });
         }
     }
 }

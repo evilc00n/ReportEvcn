@@ -24,7 +24,7 @@ builder.Services.AddApplications();
 
 var app = builder.Build();
 
-app.UseMiddleware<ExceptionHandlingMiddlewarecs>();
+app.UseMiddleware<ExceptionHandlingMiddleware>();
 
 if (app.Environment.IsDevelopment())
 {

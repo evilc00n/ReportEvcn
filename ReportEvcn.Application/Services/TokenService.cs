@@ -66,21 +66,32 @@ namespace ReportEvcn.Application.Services
                 ValidIssuer = _issuer
             };
             var tokenHandler = new JwtSecurityTokenHandler();
-            var claimsPrincipal = tokenHandler.ValidateToken(accessToken, tokenValidationParameters, out var securityToken);
-            if (securityToken is not JwtSecurityToken jwtSecurityToken 
-                || !jwtSecurityToken.Header.Alg.Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+
+
+            try
+            {
+                var claimsPrincipal = tokenHandler
+                    .ValidateToken(accessToken, tokenValidationParameters, out var securityToken);
+                if (securityToken is not JwtSecurityToken jwtSecurityToken
+                    || !jwtSecurityToken.Header.Alg
+                    .Equals(SecurityAlgorithms.HmacSha256, StringComparison.InvariantCultureIgnoreCase))
+                {
+                    throw new SecurityTokenException(ErrorMessage.InvalidToken);
+                }
+                return claimsPrincipal;
+            }
+            catch (Exception ex)
             {
                 throw new SecurityTokenException(ErrorMessage.InvalidToken);
             }
 
 
-            return claimsPrincipal;
+
         }
 
         public async Task<BaseResult<TokenDTO>> RefreshToken(TokenDTO dto)
         {
             var accessToken = dto.AccessToken;
-            var refreshToken = dto.RefreshToken;
 
             var claimPrincipal = GetPrincipalFromExpiredToken(accessToken);
 
@@ -89,8 +100,7 @@ namespace ReportEvcn.Application.Services
             var user = await _userRepository.GetAll()
                 .Include(x => x.UserToken)
                 .FirstOrDefaultAsync(x => x.Login == userName);
-            if (user == null || 
-                user.UserToken.RefreshToken != refreshToken || 
+            if (user == null ||
                 user.UserToken.RefreshTokenExpireTime <= DateTime.UtcNow)
             {
                 return new BaseResult<TokenDTO>()
@@ -108,11 +118,7 @@ namespace ReportEvcn.Application.Services
 
             return new BaseResult<TokenDTO>()
             {
-                Data = new TokenDTO()
-                {
-                    AccessToken = newAccessToken,
-                    RefreshToken = newRefreshToken
-                }
+                Data = new TokenDTO(AccessToken: newAccessToken)
             };
         }
     }

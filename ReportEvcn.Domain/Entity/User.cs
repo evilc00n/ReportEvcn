@@ -3,9 +3,9 @@
 
 namespace ReportEvcn.Domain.Entity
 {
-    public class User : IEntityId<long>, IAuditable
+    public class User : IEntityId<Guid>, IAuditable
     {
-        public long Id { get; set; }
+        public Guid Id { get; set; }
 
         public string Login { get; set; }
 
@@ -22,6 +22,12 @@ namespace ReportEvcn.Domain.Entity
         public DateTime? UpdatedAt { get; set; }
         public long? UpdatedBy { get; set; }
 
+        public User() { }
+        public User(Guid id, string login)
+        {
+            Id = id;
+            Login = login;
+        }
         
     }
 }

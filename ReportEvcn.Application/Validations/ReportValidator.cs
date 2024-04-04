@@ -3,12 +3,19 @@ using ReportEvcn.Domain.Entity;
 using ReportEvcn.Domain.Enum;
 using ReportEvcn.Domain.Interfaces.Validations;
 using ReportEvcn.Domain.Result;
-
+using Serilog;
 
 namespace ReportEvcn.Application.Validations
 {
     public class ReportValidator : IReportValidator
     {
+        private readonly ILogger _logger;
+
+        public ReportValidator(ILogger logger)
+        {
+            _logger = logger;
+        }
+
         public BaseResult CreateValidator(Report report, User user)
         {
             if (report != null)
@@ -42,5 +49,6 @@ namespace ReportEvcn.Application.Validations
             }
             return new BaseResult();
         }
+
     }
 }

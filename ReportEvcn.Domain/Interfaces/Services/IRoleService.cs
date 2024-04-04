@@ -11,6 +11,14 @@ namespace ReportEvcn.Domain.Interfaces.Services
     public interface IRoleService
     {
         /// <summary>
+        /// Получение списка всех ролей
+        /// </summary>
+        /// <returns></returns>
+        Task<CollectionResult<RoleDTO>> GetAllRolesAsync();
+
+
+
+        /// <summary>
         /// Создание роли
         /// </summary>
         /// <param name="dto"></param>
@@ -22,7 +30,7 @@ namespace ReportEvcn.Domain.Interfaces.Services
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
-        Task<BaseResult<RoleDTO>> DeleteRoleAsync(long id);
+        Task<BaseResult<RoleDTO>> DeleteRoleAsync(Guid id);
 
         /// <summary>
         /// Обновление роли
@@ -53,5 +61,6 @@ namespace ReportEvcn.Domain.Interfaces.Services
         /// <param name="dto"></param>
         /// <returns></returns>
         Task<BaseResult<UserRoleDTO>> UpdateRoleForUserAsync(UpdateUserRoleDTO dto);
+
     }
 }
